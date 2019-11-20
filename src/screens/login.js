@@ -4,7 +4,12 @@ import {Text, Input ,Button} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class login extends Component {
-  render() {
+    state={
+        look : true
+    }
+
+    render() {
+
     return (
       <View style={{flex:1,justifyContent:'center',paddingHorizontal:20}}>
         <Text style={{alignSelf:'center'}} h1> Insta </Text>
@@ -23,6 +28,7 @@ export default class login extends Component {
         </View>
         <View style={{marginTop:15}}>
             <Input
+                secureTextEntry={this.state.look}
                 placeholder='Password'
                 leftIcon={
                     <Icon
@@ -30,6 +36,15 @@ export default class login extends Component {
                     size={24}
                     color='black'
                     style={{paddingRight:10}}
+                    />
+                }
+                rightIcon={
+                    <Icon
+                    name='eye'
+                    size={24}
+                    color='black'
+                    style={{paddingRight:10}}
+                    onPress={() => this.setState({look : !this.state.look})}
                     />
                 }
             />
@@ -68,6 +83,7 @@ export default class login extends Component {
                 />
             </View>
         </View>
+        <Text h4 style={{alignSelf:'center'}}> Create Account </Text>
       </View>
     );
   }
