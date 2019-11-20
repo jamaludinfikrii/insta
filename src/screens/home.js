@@ -17,6 +17,7 @@ export default class home extends Component {
     return (
       <ScrollView style={{paddingTop:30}}>
         <View>
+            {/* Profile Pict And Username */}
             <View style={{flexDirection:'row',paddingHorizontal:15, justifyContent:'space-between' }}>
               <View style={{flexDirection:'row'}}>
                 <Avatar
@@ -37,13 +38,15 @@ export default class home extends Component {
               </View>
             </View>
 
-
+            {/* Image */}
             <View style={{borderTopWidth:0.3, borderTopColor:'grey',marginTop:10}}>
                 <Image 
                     source={{uri : 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg'}}
                     style={{ width: 400,height:400}}
                 />
             </View>
+
+            {/* Icon Like Comments And Bookmark */}
             <View style={{flexDirection:'row',paddingLeft:15,marginTop:15,justifyContent:'space-between'}}>
               <View style={{flexDirection:'row'}}>
                 <Icon 
@@ -68,11 +71,10 @@ export default class home extends Component {
               </View>
             </View>
 
-            
+            {/* Captions */}
             <View style={{flexDirection:'row',marginTop:15,paddingHorizontal:15}}>
               <Text style={{fontWeight:'bold'}}>Username <Text style={{fontWeight:"normal"}}>Ini Adalah Caption</Text></Text>
             </View>
-            <View></View>
         </View>
       </ScrollView>
     );
