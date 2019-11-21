@@ -4,6 +4,7 @@ import {Text, Input ,Button} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
 import Axios from 'axios'
+import {onRegisterSuccess} from './../redux/actions/users'
 import { urlApi } from '../supports/url';
 
 class Register extends Component {
@@ -56,6 +57,7 @@ class Register extends Component {
                     alert(res.data.message)
                 }
                 else{
+                    this.props.onRegisterSuccess({email,username})
                     alert(res.data.message)
                 }
             })
@@ -71,11 +73,17 @@ class Register extends Component {
         // Redirect Ke HOME
     }
 
+    componentDidUpdate(){
+        if(this.props.user){
+            console.log(this.props.user)
+        }
+    }
+
     render() {
 
     return (
       <View style={{flex:1,justifyContent:'center',paddingHorizontal:20}}>
-        <Text style={{alignSelf:'center'}} h1> {this.props.user} </Text>
+        <Text style={{alignSelf:'center'}} h1> Insta </Text>
         <View style={{marginTop:30}}>
             <Input
                 onChangeText={(text) => this.setState({username:text})}
@@ -239,4 +247,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(Register);
+export default connect(mapStateToProps,{onRegisterSuccess})(Register);
