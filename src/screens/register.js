@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View}  from 'react-native';
+import { View, ActivityIndicator}  from 'react-native';
 import {Text, Input ,Button} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Axios from 'axios'
+import { urlApi } from '../supports/url';
 
 export default class Register extends Component {
     state={
@@ -11,12 +12,15 @@ export default class Register extends Component {
         password : '',
         email : '',
         confim_password : '',
-        username_available : null
+        username_available : null,
+        loading_check_username : false,
+        loading_btn_register : false
     }
 
     onCheckUsername = () => {
+        this.setState({loading_check_username : true})
         console.log('trigered')
-        Axios.post('https://apiinstagrinjc.herokuapp.com/auth/check-username',{username : this.state.username})
+        Axios.post(urlApi + 'auth/check-username',{username : this.state.username})
         .then((res) => {
             if(res.data.error){
                 // munculin
@@ -31,6 +35,34 @@ export default class Register extends Component {
     }
 
     onBtnRegisterClick = () => {
+        this.setState({loading_btn_register : true})
+        
+        var { username,password,email } = this.state
+        var date= new Date()
+        if(username && password && email){
+            if(password !== this.state.confim_password){
+                return alert('Password Tidak sama')
+            }
+            Axios.post(urlApi + 'auth/register',{
+                username,
+                password,
+                email,
+                created_at : `${date.getDate()}-${date.getMonth()}-${19} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+            })
+            .then((res) => {
+                console.log(res.data)
+                if(res.data.error){
+                    alert(res.data.message)
+                }
+                else{
+                    alert(res.data.message)
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+
         // Check Username
         // Check Email
         // Ambil Data Dari Semua Form
@@ -49,14 +81,21 @@ export default class Register extends Component {
                 onBlur={this.onCheckUsername}
                 placeholder='Username'
                 rightIcon={
-                    this.state.username_available == null?
-                    null: this.state.username_available === true?
+                    this.state.username === '' || this.state.loading_check_username === false?
+                    null
+                    :
+                    this.state.username_available ?
                     <Icon
                         name='check'
                         size={24}
                         color='green'
                         style={{paddingLeft:10}}
-                    /> :
+                    /> 
+                    : 
+                    
+                    this.state.loading_check_username ? 
+                    <ActivityIndicator size='small' />
+                    :
                     <Icon
                         name='times'
                         size={24}
@@ -149,7 +188,9 @@ export default class Register extends Component {
         <View style={{marginTop:30}}>
             <Button
                 title='Register'
-
+                loading={this.state.loading_btn_register}
+                onPress={this.onBtnRegisterClick}
+                // loading={true}
             />
         </View>
 
