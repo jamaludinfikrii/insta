@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { View, ActivityIndicator}  from 'react-native';
 import {Text, Input ,Button} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { connect } from 'react-redux'
 import Axios from 'axios'
 import { urlApi } from '../supports/url';
 
-export default class Register extends Component {
+class Register extends Component {
     state={
         look : true,
         username: '',
@@ -47,7 +48,7 @@ export default class Register extends Component {
                 username,
                 password,
                 email,
-                created_at : `${date.getDate()}-${date.getMonth()}-${19} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+                created_at : `${date.getDate()}-${date.getMonth()}-${date.getFullYear().toString().slice(-2)} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
             })
             .then((res) => {
                 console.log(res.data)
@@ -74,7 +75,7 @@ export default class Register extends Component {
 
     return (
       <View style={{flex:1,justifyContent:'center',paddingHorizontal:20}}>
-        <Text style={{alignSelf:'center'}} h1> Insta </Text>
+        <Text style={{alignSelf:'center'}} h1> {this.props.user} </Text>
         <View style={{marginTop:30}}>
             <Input
                 onChangeText={(text) => this.setState({username:text})}
@@ -230,3 +231,12 @@ export default class Register extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+    return{
+        user : state.users.username,
+        // caption : state.bebas.caption
+    }
+}
+
+export default connect(mapStateToProps)(Register);
