@@ -248,7 +248,6 @@ class Register extends Component {
 const mapStateToProps = (state) => {
     return{
         user : state.users.username,
-        // caption : state.bebas.caption
     }
 }
 
