@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator}  from 'react-native';
+import { View, ActivityIndicator,AsyncStorage}  from 'react-native';
 import {Text, Input ,Button} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
@@ -17,7 +17,8 @@ class Register extends Component {
         confim_password : '',
         username_available : null,
         loading_check_username : false,
-        loading_btn_register : false
+        loading_btn_register : false,
+        check_storage : false
     }
 
     onCheckUsername = () => {
@@ -36,6 +37,8 @@ class Register extends Component {
         })
 
     }
+
+
 
     onBtnRegisterClick = () => {
         this.setState({loading_btn_register : true})
@@ -58,8 +61,11 @@ class Register extends Component {
                     alert(res.data.message)
                 }
                 else{
-                    this.props.onRegisterSuccess({email,username})
-                    alert(res.data.message)
+                    AsyncStorage.setItem('data',JSON.stringify({email,username}),(err) => {
+                        if(err) return alert(err.message)
+                        this.props.onRegisterSuccess({email,username})
+                        alert(res.data.message)
+                    })
                 }
             })
             .catch((err) => {
@@ -73,6 +79,22 @@ class Register extends Component {
         // Kirim Data Ke APi
         // Redirect Ke HOME
     }
+    componentDidMount(){
+        console.disableYellowBox = true
+        AsyncStorage.getItem('data')
+        .then((data) => {
+            if(data){
+                var obj_data = JSON.parse(data)
+                this.props.onRegisterSuccess(obj_data)
+                this.setState({check_storage : true})
+            }
+            this.setState({check_storage : true})
+            console.log(obj_data)
+        })
+        .catch((err) => {
+
+        })
+    }
 
     componentDidUpdate(){
         if(this.props.user){
@@ -85,6 +107,16 @@ class Register extends Component {
     }
 
     render() {
+    if(this.state.check_storage === false){
+        return(
+            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}> 
+                <Text h2>
+                    Insta
+                </Text>
+                <ActivityIndicator size='small' />
+            </View>
+        )
+    }
 
     return (
       <View style={{flex:1,justifyContent:'center',paddingHorizontal:20}}>

@@ -7,6 +7,7 @@ import explore from '../screens/explore'
 import postImage from '../screens/postImage'
 import editProfile from '../screens/editProfile'
 
+    
 const MainTab = createAppContainer(createMaterialTopTabNavigator(
     {
         home : {
@@ -38,7 +39,9 @@ const MainTab = createAppContainer(createMaterialTopTabNavigator(
         tabBarPosition : 'bottom',
         tabBarOptions : {
             showIcon : true,
-            showLabel: false
+            showLabel: false,
+            indicatorStyle : {position : 'absolute',top:0,backgroundColor: 'black'},
+            style : {backgroundColor : "white",borderTopWidth : 0.8,borderTopColor : 'gray'}
         }
     }
 
