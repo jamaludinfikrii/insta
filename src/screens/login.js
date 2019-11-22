@@ -1,20 +1,64 @@
 import React, { Component } from 'react';
-import { View}  from 'react-native';
+import { View, AsyncStorage}  from 'react-native';
 import {Text, Input ,Button} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import Axios from 'axios';
+import { urlApi } from '../supports/url';
+import { connect } from 'react-redux'
+import { onRegisterSuccess } from './../redux/actions/users'
+import { StackActions,NavigationActions } from 'react-navigation';
 
-export default class login extends Component {
+class login extends Component {
     state={
-        look : true
+        look : true,
+        username : '',
+        password  : '',
+        loading_btn : false
+    }
+
+    onBtnLoginClick = () => {
+        this.setState({loading_btn:true})
+        const {username,password} = this.state
+        if(username&&password){
+            Axios.post(urlApi + 'auth/login',{username,password})
+            .then((res) => {
+                if(res.data.error){
+                    return alert(res.data.message)
+                }
+                var data_login = res.data.data[0]
+                var {username,email} = data_login
+                AsyncStorage.setItem('data',JSON.stringify({username,email}),(err)=>{
+                    if(err) return alert(err.message)
+                    this.props.onRegisterSuccess({username,email})
+                })
+
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+        else{
+            return alert('Form cannot empty')
+        }
+    }
+
+    componentDidUpdate(){
+        if(this.props.bebas){
+            const reset_stack = StackActions.reset({
+                index : 0,
+                actions : [NavigationActions.navigate({routeName:'home'})]
+            })
+            this.props.navigation.dispatch(reset_stack)
+        }
     }
 
     render() {
-
     return (
       <View style={{flex:1,justifyContent:'center',paddingHorizontal:20}}>
         <Text style={{alignSelf:'center'}} h1> Insta </Text>
         <View style={{marginTop:30}}>
             <Input
+                onChangeText = {(text) => this.setState({username : text})}
                 placeholder='Username'
                 leftIcon={
                     <Icon
@@ -28,6 +72,7 @@ export default class login extends Component {
         </View>
         <View style={{marginTop:15}}>
             <Input
+                onChangeText = {(text) => this.setState({password : text})}
                 secureTextEntry={this.state.look}
                 placeholder='Password'
                 leftIcon={
@@ -52,7 +97,8 @@ export default class login extends Component {
         <View style={{marginTop:30}}>
             <Button
                 title='Login'
-
+                onPress={this.onBtnLoginClick}
+                loading = {this.state.loading_btn}
             />
         </View>
 
@@ -88,3 +134,11 @@ export default class login extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        bebas : state.users.username
+    }
+}
+
+export default connect(mapStateToProps,{onRegisterSuccess})(login)
