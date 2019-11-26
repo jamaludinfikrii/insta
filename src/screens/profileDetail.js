@@ -3,16 +3,25 @@ import { View,ScrollView } from 'react-native';
 import {Header,Left,Body,Icon,Container,Right} from 'native-base'
 import {Avatar,Text,Image} from 'react-native-elements'
 export default class profileDetail extends Component {
-
+    state = {data : null}
+    componentDidMount(){
+        var data = this.props.navigation.getParam('data')
+        this.setState({data : data})
+    }
   render() {
+    if(this.state.data === null){
+        return(
+            <Text h1>Loading</Text>
+        )
+    }
     return (
         <View>
             <Header style={{backgroundColor:'white'}}>
                 <Left>
-                    <Icon name='arrow-back' />
+                    <Icon name='arrow-back' onPress={() => this.props.navigation.goBack()} />
                 </Left>
                 <Body>
-                    <Text style={{fontWeight:'bold'}}>Username</Text>
+                    <Text style={{fontWeight:'bold'}}>Username </Text>
                 </Body>
                 <Right>
                 </Right>
@@ -30,7 +39,7 @@ export default class profileDetail extends Component {
                     />
                 </View>
                 <View style={{flex:1 , justifyContent:'center',alignItems:'center'}}>
-                    <Text h4>49</Text>
+                    <Text h4>{this.state.data.length}</Text>
                     <Text>Posts</Text>
                 </View>
                 <View style={{flex:1 , justifyContent:'center',alignItems:'center'}}>

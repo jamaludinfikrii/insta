@@ -17,7 +17,7 @@ export default class post extends Component {
                     this.props.avatarUrl,
                 }}
                 />
-            <Text style={{marginLeft:15,fontWeight:'bold',fontSize:18}}>{this.props.username}</Text>
+            <Text onPress={this.props.onPindah} style={{marginLeft:15,fontWeight:'bold',fontSize:18}}>{this.props.username}</Text>
 
           </View>
           <View style={{alignSelf:'center'}}>

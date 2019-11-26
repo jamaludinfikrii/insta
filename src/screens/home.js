@@ -5,13 +5,13 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Post from './../components/post'
 import { urlApi } from '../supports/url';
 import Axios from 'axios';
-const data =[
-    {username : 'fikri' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
-    {username : 'andi' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
-    {username : 'budi' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
-    {username : 'seto' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
-    {username : 'susilo' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
-]
+// const data =[
+//     {username : 'fikri' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
+//     {username : 'andi' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
+//     {username : 'budi' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
+//     {username : 'seto' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
+//     {username : 'susilo' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
+// ]
 
 
 export default class home extends Component {
@@ -27,6 +27,14 @@ export default class home extends Component {
     })
   }
 
+  filterData = (username) => {
+    var data_filtered = this.state.data.filter((val) => {
+      return val.username === username
+    })
+
+    return this.props.navigation.navigate('detail',{data : data_filtered})
+  }
+
   render() {
     if(this.state.data === null){
       return(
@@ -40,7 +48,7 @@ export default class home extends Component {
         {
           this.state.data.map((val) => {
             return(
-              <Post avatarUrl={urlApi + "public/profile/default.png"} postUrl = {urlApi + val.foto_url} username={val.username} caption={val.caption}/>
+              <Post avatarUrl={urlApi + "public/profile/default.png"} onPindah={() =>this.filterData(val.username)} postUrl = {urlApi + val.foto_url} username={val.username} caption={val.caption}/>
             )
           })
         }
