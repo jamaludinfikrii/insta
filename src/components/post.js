@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 export default class post extends Component {
   render() {
     return (
-        <View style={{marginVertical:20}}>
+        <View style={{marginBottom:40}}>
         {/* Profile Pict And Username */}
         <View style={{flexDirection:'row',paddingHorizontal:15, justifyContent:'space-between' }}>
           <View style={{flexDirection:'row'}}>

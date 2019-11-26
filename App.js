@@ -8,6 +8,7 @@ import 'react-native-gesture-handler'
 import Reducers from './src/redux/reducers/index'
 import {Provider } from 'react-redux'
 import {createStore} from 'redux'
+import ProfileDetail from './src/screens/profileDetail';
 
 const store = createStore(Reducers)
 
@@ -16,7 +17,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <MainStack/>
+        <ProfileDetail/>
       </Provider>
     );
   }

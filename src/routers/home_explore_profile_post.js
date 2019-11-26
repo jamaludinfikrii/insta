@@ -7,7 +7,6 @@ import explore from '../screens/explore'
 import postImage from '../screens/postImage'
 import editProfile from '../screens/editProfile'
 
-    
 const MainTab = createAppContainer(createMaterialTopTabNavigator(
     {
         home : {
