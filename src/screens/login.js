@@ -26,10 +26,10 @@ class login extends Component {
                     return alert(res.data.message)
                 }
                 var data_login = res.data.data[0]
-                var {username,email} = data_login
-                AsyncStorage.setItem('data',JSON.stringify({username,email}),(err)=>{
+                var {username,email,id} = data_login
+                AsyncStorage.setItem('data',JSON.stringify({username,email,id}),(err)=>{
                     if(err) return alert(err.message)
-                    this.props.onRegisterSuccess({username,email})
+                    this.props.onRegisterSuccess({username,email,id})
                 })
 
             })
