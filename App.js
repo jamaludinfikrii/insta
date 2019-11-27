@@ -9,7 +9,8 @@ import Reducers from './src/redux/reducers/index'
 import {Provider } from 'react-redux'
 import {createStore} from 'redux'
 import ProfileDetail from './src/screens/profileDetail';
-
+import PostDetail from './src/screens/postDetail'
+import Explore from './src/screens/explore';
 const store = createStore(Reducers)
 
 
