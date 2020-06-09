@@ -26,7 +26,6 @@ export default class post extends Component {
           }
         </Text>
       )
-      // tambahin button see more
     }
     else{
       return this.props.caption

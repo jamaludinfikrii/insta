@@ -30,13 +30,7 @@ class home extends Component {
     })
   }
 
-  filterData = (username) => {
-    var data_filtered = this.state.data.filter((val) => {
-      return val.username === username
-    })
-
-    return this.props.navigation.navigate('detail',{data : data_filtered})
-  }
+  
 
   render() {
     if(this.state.data === null){
@@ -51,7 +45,7 @@ class home extends Component {
         {
           this.state.data.filter((val) => val.username !== this.props.user.username).map((val) => {
             return(
-              <Post avatarUrl={urlApi + "public/profile/default.png"} onPindah={() =>this.filterData(val.username)} postUrl = {urlApi + val.foto_url} username={val.username} caption={val.caption}/>
+              <Post avatarUrl={urlApi + "public/profile/default.png"} onPindah={() =>this.props.navigation.navigate('detail',{username : val.username})} postUrl = {urlApi + val.foto_url} username={val.username} caption={val.caption}/>
             )
           })
         }
