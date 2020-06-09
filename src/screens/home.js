@@ -22,12 +22,8 @@ class home extends Component {
     Axios.get(urlApi + 'post/getallpost')
     .then((data) => {
       // console.log(data.data.data)
-      let dataFiltered = data.data.data.filter((val) => {
-        return val.username !== this.props.user.username
-      })
-
-      // console.log(dataFiltered)
-      this.setState({data:dataFiltered})
+      
+      this.setState({data:data.data.data})
     })
     .catch((err) => {
       console.log(err)
@@ -53,7 +49,7 @@ class home extends Component {
     return (
       <ScrollView style={{paddingTop:30}}>
         {
-          this.state.data.map((val) => {
+          this.state.data.filter((val) => val.username !== this.props.user.username).map((val) => {
             return(
               <Post avatarUrl={urlApi + "public/profile/default.png"} onPindah={() =>this.filterData(val.username)} postUrl = {urlApi + val.foto_url} username={val.username} caption={val.caption}/>
             )

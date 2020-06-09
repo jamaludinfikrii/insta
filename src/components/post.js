@@ -4,6 +4,35 @@ import {Image,Avatar, Text} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class post extends Component {
+  state = {
+    showAll : false
+  }
+
+  renderCaption = () => {
+    if(this.props.caption.length > 50){
+      return(
+        <Text>
+          {
+            this.state.showAll ?
+            this.props.caption :
+            this.props.caption.slice(0,50)
+          }
+
+          { 
+            this.state.showAll ? 
+            <Text onPress={() => this.setState({showAll : false})} style={{fontWeight:'bold'}}>See Less</Text>
+            :
+            <Text onPress={() => this.setState({showAll: true})} style={{fontWeight:'bold'}}>See More</Text>
+          }
+        </Text>
+      )
+      // tambahin button see more
+    }
+    else{
+      return this.props.caption
+    }
+  }
+
   render() {
     return (
         <View style={{marginBottom:40}}>
@@ -63,7 +92,7 @@ export default class post extends Component {
 
         {/* Captions */}
         <View style={{flexDirection:'row',marginTop:15,paddingHorizontal:15}}>
-          <Text style={{fontWeight:'bold'}}>{this.props.username} <Text style={{fontWeight:"normal"}}>{this.props.caption}</Text></Text>
+          <Text style={{fontWeight:'bold'}}>{this.props.username} <Text style={{fontWeight:"normal"}}>{this.renderCaption()}</Text></Text>
         </View>
     </View>
     );
