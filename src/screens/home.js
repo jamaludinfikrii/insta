@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Post from './../components/post'
 import { urlApi } from '../supports/url';
 import Axios from 'axios';
+import { connect } from 'react-redux';
 // const data =[
 //     {username : 'fikri' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
 //     {username : 'andi' , url_foto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKrpS7K4U5ju_Jqtj69t2SW90P8G0yInzjmySwy-McoemFPXj0', caption : 'caption',likes : 10},
@@ -14,13 +15,19 @@ import Axios from 'axios';
 // ]
 
 
-export default class home extends Component {
+class home extends Component {
   state = {data : null}
   
   componentDidMount(){
     Axios.get(urlApi + 'post/getallpost')
     .then((data) => {
-      this.setState({data:data.data.data})
+      // console.log(data.data.data)
+      let dataFiltered = data.data.data.filter((val) => {
+        return val.username !== this.props.user.username
+      })
+
+      // console.log(dataFiltered)
+      this.setState({data:dataFiltered})
     })
     .catch((err) => {
       console.log(err)
@@ -57,3 +64,11 @@ export default class home extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return{
+    user : state.users
+  }
+}
+
+export default connect(mapStateToProps)(home);
