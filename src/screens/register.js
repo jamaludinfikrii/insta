@@ -61,16 +61,26 @@ class Register extends Component {
                 created_at : `${date.getDate()}-${date.getMonth()}-${date.getFullYear().toString().slice(-2)} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
             })
             .then((res) => {
+
+                // Axios Post auth/login
                 console.log(res.data)
                 if(res.data.error){
                     alert(res.data.message)
                 }
                 else{
-                    AsyncStorage.setItem('data',JSON.stringify({email,username}),(err) => {
-                        if(err) return alert(err.message)
-                        this.props.onRegisterSuccess({email,username})
-                        alert(res.data.message)
+                    Axios.post(urlApi + 'auth/login', {username : username , password: password })
+                    .then((res) => {
+                        alert(res.data.data[0].id)
+                        AsyncStorage.setItem('data',JSON.stringify({email,username,id:res.data.data[0].id}),(err) => {
+                            if(err) return alert(err.message)
+                            this.props.onRegisterSuccess({email,username, id:res.data.data[0].id})
+                            alert(res.data.message)
+                        })
                     })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+
                 }
             })
             .catch((err) => {
