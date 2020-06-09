@@ -8,6 +8,7 @@ import postImage from '../screens/postImage'
 import editProfile from '../screens/editProfile'
 import ProfileDetail from '../screens/profileDetail'
 import { createStackNavigator } from 'react-navigation-stack'
+import ExplorePostDetailRouter from './exprlore_postDetail'
 
 
 const Home_to_Profile= createAppContainer(createStackNavigator({
@@ -29,7 +30,7 @@ const MainTab = createAppContainer(createMaterialTopTabNavigator(
             }
         },
         explore : {
-            screen : explore,
+            screen : ExplorePostDetailRouter,
             navigationOptions : {
                 tabBarIcon : <Icon name='search' size={24} />
             }

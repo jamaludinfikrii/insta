@@ -16,7 +16,7 @@ export default class postDetail extends Component {
             leftComponent={{ 
                 icon: 'arrow-back', 
                 color: 'black',
-                onPress: () => this.props.selectProfilePost(null) 
+                onPress: () => this.props.navigation.goBack() 
             }}
             containerStyle={{
                 backgroundColor: '#fff',

@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 class MyProfile extends Component {
     state = {data : null}
     componentDidMount(){
-        var data = this.props.user.username
+        console.log(this.props.bebas)
+        var data = this.props.bebas.username
         Axios.get(urlApi + 'post/getpostbyusername?username=' + data)
         .then((res) => {
             console.log(res.data)
@@ -97,7 +98,7 @@ class MyProfile extends Component {
 
 const mapStateToProps = (state) => {
   return{
-    user : state.users
+    bebas : state.users
   }
 }
 

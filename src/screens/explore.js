@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text,ScrollView,TouchableWithoutFeedback,Image } from 'react-native';
 import {SearchBar} from 'react-native-elements'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 export default class explore extends Component {
@@ -31,9 +32,12 @@ export default class explore extends Component {
                     // justifyContent: 'space-between',
                     flex: 1
                 }}
-              >
+              > 
+                  
                   <View style={{width:`${100/3}%`}}>
-                      <Image source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSxrsiKTNSyMmJ4oCZJBtyrS4GD-Y4qd9-8G9ekrFJsex_IvfLp' }} style={{height: 125, width: '100%' }}/>
+                      <TouchableOpacity onPress={() => this.props.navigation.navigate('postDetail')}>
+                        <Image source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSxrsiKTNSyMmJ4oCZJBtyrS4GD-Y4qd9-8G9ekrFJsex_IvfLp' }} style={{height: 125, width: '100%' }}/>
+                      </TouchableOpacity>
                   </View>
                   <View style={{width:`${100/3}%`}}>
                       <Image source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSISxhwEyv6Bo5LjRbq1Uhr3iL7Dgn4FaJ15dda1gzl2la3UoZT' }} style={{height: 125, width: '100%' }}/>
