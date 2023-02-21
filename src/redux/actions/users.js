@@ -4,3 +4,5 @@ export const onRegisterSuccess = (data) => {
         payload:data
     }
 }
+
+console.log("test")
